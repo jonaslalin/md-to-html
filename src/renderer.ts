@@ -1,5 +1,4 @@
 /**
- * Mermaid diagram renderer module.
  * Renders mermaid diagrams to SVG using Mermaid CLI.
  */
 
@@ -12,14 +11,25 @@ import { fileURLToPath } from "node:url"
 import { promisify } from "node:util"
 import { logger } from "./logger.js"
 
-const MERMAID_RENDER_TIMEOUT_MS = 30000
+/**
+ * Mermaid CLI rendering timeout (30 seconds).
+ */
+const MERMAID_RENDER_TIMEOUT_MS = 30_000
 
 const execFileAsync = promisify(execFile)
 
+/**
+ * Renders mermaid diagrams to SVG using Mermaid CLI.
+ */
 export class MermaidRenderer {
   private tempDir: string | null = null
-  private mmdcPath: string
+  private readonly mmdcPath: string
 
+  /**
+   * Creates a new MermaidRenderer instance.
+   *
+   * @throws {Error} If Mermaid CLI is not found
+   */
   constructor() {
     const __filename = fileURLToPath(import.meta.url)
     const __dirname = dirname(__filename)
@@ -37,8 +47,11 @@ export class MermaidRenderer {
   }
 
   /**
-   * Render mermaid diagram to SVG image (high quality, scalable).
-   * Returns path to SVG file or null if rendering fails.
+   * Renders a mermaid diagram to SVG.
+   *
+   * @param mermaidCode - Mermaid diagram code
+   * @param diagramId - Unique diagram identifier
+   * @returns SVG file path, or null if rendering fails
    */
   async renderMermaidToSvg(mermaidCode: string, diagramId: string): Promise<string | null> {
     if (!this.tempDir) {
@@ -82,7 +95,7 @@ export class MermaidRenderer {
   }
 
   /**
-   * Clean up temporary files.
+   * Cleans up temporary files.
    */
   async cleanup(): Promise<void> {
     if (this.tempDir) {

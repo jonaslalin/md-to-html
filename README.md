@@ -4,10 +4,11 @@ A Node.js/TypeScript tool to convert markdown files with mermaid diagrams to HTM
 
 ## Features
 
-- Converts markdown to HTML
+- Converts markdown to HTML with GitHub Flavored Markdown support
+- Syntax highlighting for code blocks using [Shiki](https://shiki.style) (GitHub Light theme)
 - Renders mermaid diagrams as SVG (high quality, scalable)
 - Embeds SVG directly in HTML
-- Professional structured logging
+- Structured logging with [Pino](https://getpino.io)
 
 ## Installation
 
@@ -41,8 +42,10 @@ npm start -- input.md -o output.html
 ## How It Works
 
 1. Extracts mermaid diagrams from markdown code blocks
-2. Renders diagrams to SVG using Mermaid CLI
-3. Converts markdown to HTML with embedded SVG diagrams
+2. Renders diagrams to SVG using [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli)
+3. Converts markdown to HTML using [micromark](https://github.com/micromark/micromark) with GFM support
+4. Applies syntax highlighting to code blocks using [Shiki](https://shiki.style) (GitHub Light theme)
+5. Embeds SVG diagrams and highlighted code blocks in the final HTML output
 
 ## Development
 
@@ -68,8 +71,8 @@ Available levels: `fatal`, `error`, `warn`, `info`, `debug`, `trace`
 
 ## Requirements
 
-- Node.js >= 24.0.0
-- npm
+- **Node.js**: >= 24.0.0 (see `.node-version`)
+- **npm**: Latest version recommended
 
 ## License
 

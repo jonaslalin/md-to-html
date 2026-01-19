@@ -4,15 +4,37 @@
  * Command-line interface for md-to-html.
  */
 
-import { existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
+import { resolve } from "node:path"
+import { fileURLToPath } from "node:url"
 import yargs from "yargs"
 import { hideBin } from "yargs/helpers"
 import { MarkdownToHtmlConverter } from "./converter.js"
 import { logger } from "./logger.js"
 import { MermaidRenderer } from "./renderer.js"
 
-async function main() {
-  const argv = await yargs(hideBin(process.argv))
+/**
+ * Gets package version from package.json.
+ */
+function getVersion(): string {
+  try {
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = resolve(__filename, "..")
+    const packagePath = resolve(__dirname, "..", "package.json")
+    const packageJson = JSON.parse(readFileSync(packagePath, "utf-8"))
+    return packageJson.version || "1.0.0"
+  } catch {
+    return "1.0.0"
+  }
+}
+
+/**
+ * Main CLI entry point.
+ */
+async function main(): Promise<void> {
+  const version = getVersion()
+
+  await yargs(hideBin(process.argv))
     .scriptName("md-to-html")
     .usage("$0 <input> [options]", "Convert markdown with mermaid diagrams to HTML")
     .command(
@@ -48,24 +70,23 @@ async function main() {
           await converter.convert(input, output)
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error)
-          logger.error({ error: errorMessage }, "Error during conversion")
+          logger.error({ error: errorMessage, input }, "Error during conversion")
           process.exit(1)
         } finally {
           await renderer.cleanup()
         }
       },
     )
-    .version("1.0.0")
+    .version(version)
     .help()
     .alias("help", "h")
     .alias("version", "v")
     .strict()
     .parseAsync()
-
-  return argv
 }
 
 main().catch((error) => {
-  logger.fatal({ error }, "Fatal error occurred")
+  const errorMessage = error instanceof Error ? error.message : String(error)
+  logger.fatal({ error: errorMessage }, "Fatal error occurred")
   process.exit(1)
 })

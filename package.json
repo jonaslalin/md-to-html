@@ -1,7 +1,7 @@
 {
   "name": "md-to-html",
   "version": "1.0.0",
-  "description": "Convert markdown files with mermaid diagrams to HTML",
+  "description": "Convert markdown files with mermaid diagrams to HTML with syntax highlighting using Shiki",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -18,7 +18,11 @@
     "mermaid",
     "html",
     "converter",
-    "svg"
+    "svg",
+    "shiki",
+    "syntax-highlighting",
+    "gfm",
+    "github-flavored-markdown"
   ],
   "author": "Jonas Lalin <1ac6df24@gmail.com>",
   "license": "MIT",
@@ -32,6 +36,7 @@
     "micromark-extension-gfm": "^3.0.0",
     "pino": "^10.2.0",
     "pino-pretty": "^13.1.3",
+    "shiki": "^3.21.0",
     "yargs": "^18.0.0"
   },
   "devDependencies": {
