@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Mac OS
+.DS_Store
+
+# Temporary files (generated during conversion)
+*.tmp
+*.log
+*.mmd
+*.svg
