@@ -33,8 +33,10 @@ Creates `input.html` in the same directory. You can:
 ### Specify Output File
 
 ```bash
-npm start input.md -o output.html
+npm start -- input.md -o output.html
 ```
+
+**Note**: The `--` is required when using flags like `-o` to pass arguments through to the script.
 
 ## How It Works
 
