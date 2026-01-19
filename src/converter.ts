@@ -7,7 +7,7 @@
 import { readFile, writeFile } from "node:fs/promises"
 import { micromark } from "micromark"
 import { gfm, gfmHtml } from "micromark-extension-gfm"
-import { type BundledLanguage, createHighlighter, type Highlighter } from "shiki/bundle/full"
+import { type BundledLanguage, createHighlighter, type Highlighter } from "shiki"
 import { logger } from "./logger.js"
 import type { MermaidRenderer } from "./renderer.js"
 
